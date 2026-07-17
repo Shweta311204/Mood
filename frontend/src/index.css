@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------- */
+/* Theme tokens                                                            */
+/* ---------------------------------------------------------------------- */
+:root {
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+  /* "Day" — clean white, not beige */
+  --bg: 255 255 255;
+  --surface: 246 246 243;
+  --surface-2: 236 236 231;
+  --text: 17 17 15;
+  --text-muted: 106 104 96;
+  --border: 224 223 216;
+
+  /* neutral ink, used for text-on-ink situations (rarely for buttons now) */
+  --ink: 17 17 15;
+  --ink-contrast: 255 255 255;
+
+  /* punchy call-to-action color — a play-button red in Day mode */
+  --cta: 226 57 60;
+  --cta-contrast: 255 255 255;
+
+  /* accent defaults to the CTA color pre-mood, then gets overridden per mood */
+  --accent: 226 57 60;
+
+  --radius: 4px;
+  --container: 1180px;
+}
+
+[data-theme='night'] {
+  /* "Night" — deep dark mode */
+  --bg: 15 15 14;
+  --surface: 24 23 21;
+  --surface-2: 33 32 28;
+  --text: 241 238 230;
+  --text-muted: 145 141 129;
+  --border: 45 44 39;
+
+  --ink: 241 238 230;
+  --ink-contrast: 15 15 14;
+
+  /* neon mint pop against black — Spotify/Netflix-adjacent energy */
+  --cta: 108 255 176;
+  --cta-contrast: 10 20 14;
+
+  --accent: 108 255 176;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: var(--font-body);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.3);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Mood -> accent hue map. Overrides --accent (and only --accent) once a   */
+/* mood has been detected — mood word, confidence bar, chips, hover glow.  */
+/* ---------------------------------------------------------------------- */
+body[data-mood='happy']       { --accent: 214 150 20;  }
+body[data-mood='sad']         { --accent: 61 108 176;  }
+body[data-mood='excited']     { --accent: 226 84 42;   }
+body[data-mood='romantic']    { --accent: 214 68 118;  }
+body[data-mood='nostalgic']   { --accent: 168 122 78;  }
+body[data-mood='adventurous'] { --accent: 34 150 128;  }
+body[data-mood='relaxed']     { --accent: 84 158 116;  }
+body[data-mood='anxious']     { --accent: 138 92 202;  }
+body[data-mood='angry']       { --accent: 214 54 54;   }
+body[data-mood='hopeful']     { --accent: 220 168 40;  }
+body[data-mood='melancholic'] { --accent: 76 100 148;  }
+body[data-mood='energetic']   { --accent: 232 138 0;   }
+body[data-mood='peaceful']    { --accent: 62 156 130;  }
+body[data-mood='confused']    { --accent: 146 104 202; }
+body[data-mood='inspired']    { --accent: 30 158 202;  }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
